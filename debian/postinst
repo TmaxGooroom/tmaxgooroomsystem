@@ -1,0 +1,36 @@
+#!/bin/bash -e
+
+case $1 in
+    configure)
+      if [ -d /usr/share/plymouth/themes/tmaxgooroom ]; then
+        if grep -qs tmaxgooroom /lib/systemd/system/plymouth-reboot.service
+        then
+          echo -e "lang_check script exist!"
+        else 
+          plymouth-set-default-theme -R tmaxgooroom
+          sed -i -r -e "/ExecStartPost/a\ExecStartPost=/usr/share/plymouth/themes/tmaxgooroom/lang_check.sh" /lib/systemd/system/plymouth-reboot.service
+        fi
+     fi
+    ;;
+
+    triggered)
+        if [ -e /etc/grub.d/10_linux ]; then
+          sed -i -e 's@OS=\"${GRUB_DISTRIBUTOR}\"@OS=\"TmaxGooroom 21\"@g' /etc/grub.d/10_linux
+          sed -i -e 's@OS=\"${GRUB_DISTRIBUTOR} GNU/Linux\"@OS=\"TmaxGooroom 21\"@g' /etc/grub.d/10_linux
+        fi
+
+        if [ -d /usr/share/plymouth/themes/tmaxgooroom ]; then
+          if grep -qs tmaxgooroom /lib/systemd/system/plymouth-reboot.service
+          then
+            echo -e "lang_check script exist!"
+          else 
+            plymouth-set-default-theme -R tmaxgooroom
+            sed -i -r -e "/ExecStartPost/a\ExecStartPost=/usr/share/plymouth/themes/tmaxgooroom/lang_check.sh" /lib/systemd/system/plymouth-reboot.service
+          fi
+        fi
+    ;;
+
+    *)
+    ;;
+esac
+

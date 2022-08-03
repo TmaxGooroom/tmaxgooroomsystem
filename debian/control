@@ -1,0 +1,13 @@
+Source: tmaxgooroomsystem
+Section: admin
+Priority: optional
+Maintainer: os1-2 <os1_2@tmax.co.kr>
+Build-Depends: debhelper (>= 10)
+Standards-Version: 4.5.1
+
+Package: tmaxgooroomsystem
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}, plymouth, plymouth-label
+Description: TmaxGooroom System Base Package
+ Used by the desktop and other tmaxgooroom tools to gather
+ information and process common system tasks.

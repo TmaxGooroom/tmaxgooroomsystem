@@ -1,0 +1,2 @@
+os-probes/86tmaxgooroom usr/lib/os-probes/mounted
+X11/xorg.conf.d/01-vtswitch.conf /etc/X11/xorg.conf.d/

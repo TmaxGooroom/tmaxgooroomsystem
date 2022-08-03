@@ -1,0 +1,23 @@
+#!/bin/sh
+# Test for tmaxgooroom
+set -e
+
+. /usr/share/os-prober/common.sh
+
+partition="$1"
+dir="$2"
+type="$3"
+
+file="$dir/etc/gooroom/info"
+if [ ! -e "$file" ]; then
+	exit 1
+fi
+
+if [ -e "$file" ]; then
+	short="$(grep ^NAME= "$file" | sed 's/^[^=]*=//; s/^['\''"]\(.*\)['\''"]$/\1/; s/\\\(.\)/\1/g; s/[[:space:]].*//')"
+	long="$(grep ^PRETTY_NAME= "$file" | sed 's/^[^=]*=//; s/^['\''"]\(.*\)['\''"]$/\1/; s/\\\(.\)/\1/g')"
+fi
+
+label="$(count_next_label "$short")"
+result "$partition:$long:$label:linux"
+exit 0
